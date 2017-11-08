@@ -17,7 +17,7 @@ df = pd.concat(election)
 df["Republican Share"] = df["Republican"] / df["Total Votes Cast"]
 df.reset_index(inplace=True)
 
-AccomackCounty = df.loc['Accomack County'].sort_values(by = 'Year', ascending = True)
+AccomackCounty = df['Accomack County'].sort_values(by = 'Year', ascending = True)
 fig1 = AccomackCounty.plot(x = "Year", y = "Republican Share", kind = "bar", title = "Republican Vote Share of Accomack County")
 fig1.get_figure().savefig('accomack_county.pdf')
 
@@ -29,6 +29,6 @@ AlexandriaCity = df['Alexandria City'].sort_values(by = 'Year', ascending = True
 fig3 = AlexandriaCity.plot(x = "Year", y ="Republican Share", kind = "bar", title = "Republican Vote Share of Alexandria City")
 fig3.get_figure().savefig('alexandra_city.pdf')
 
-AlleghanyCounty = df.loc['Alleghany County'].sort_values(by = 'Year', ascending = True)
+AlleghanyCounty = df['Alleghany County'].sort_values(by = 'Year', ascending = True)
 fig4 = AlleghanyCounty.plot(x = "Year", y = "Republican Share", kind = "bar", title = "Republican Vote Share of Alleghany County")
 fig4.get_figure().savefig('alleghany_county.pdf')
