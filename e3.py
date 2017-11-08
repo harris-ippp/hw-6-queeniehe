@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 election = []
 for i in range(1924,2020,4):
@@ -10,25 +11,22 @@ for i in range(1924,2020,4):
     df.rename(inplace = True, columns = d)
     df.dropna(inplace = True, axis = 1)
     df["Year"] = i
-    election.append(df[["Democratic","Republican","Total Votes Cast","Year"]])
+    election.append(df.loc[:,["Democratic","Republican","Total Votes Cast","Year"]])
 
-df = pd.concat(election)
+df1 = pd.concat(election)
 
-df["Republican Share"] = df["Republican"] / df["Total Votes Cast"]
-df.reset_index(inplace=True)
+county = ["Accomack County","Albemarle County","Alexandria City","Alleghany County"]
+df1["Republican Share"] = df1["Republican"] / df1["Total Votes Cast"]
 
-AccomackCounty = df['Accomack County'].sort_values(by = 'Year', ascending = True)
-fig1 = AccomackCounty.plot(x = "Year", y = "Republican Share", kind = "bar", title = "Republican Vote Share of Accomack County")
+accomack = df1.loc['Accomack County'].astype(float)
+albemarle = df1.loc['Albemarle County'].astype(float)
+alexandria = df1.loc['Alexandria City'].astype(float)
+alleghany = df1.loc['Alleghany County'].astype(float)
+fig1 = accomack.plot(kind = "bar", x = "Year", y = "Republican Share", title = "Accomack County")
 fig1.get_figure().savefig('accomack_county.pdf')
-
-AlbemarleCounty = df['Albemarle County'].sort_values(by = 'Year', ascending = True)
-fig2 = AlbemarleCounty.plot(x = "Year", y ="Republican Share", kind = "bar", title = "Republican vote share in Accomack County")
+fig2 = albemarle.plot(kind = "bar", x = "Year", y = "Republican Share", title = "Albemarle County")
 fig2.get_figure().savefig('albemarle_county.pdf')
-
-AlexandriaCity = df['Alexandria City'].sort_values(by = 'Year', ascending = True)
-fig3 = AlexandriaCity.plot(x = "Year", y ="Republican Share", kind = "bar", title = "Republican Vote Share of Alexandria City")
-fig3.get_figure().savefig('alexandra_city.pdf')
-
-AlleghanyCounty = df['Alleghany County'].sort_values(by = 'Year', ascending = True)
-fig4 = AlleghanyCounty.plot(x = "Year", y = "Republican Share", kind = "bar", title = "Republican Vote Share of Alleghany County")
+fig3 = alexandria.plot(kind = "bar", x = "Year", y = "Republican Share", title = "Alexandria City")
+fig3.get_figure().savefig('alexandria_city.pdf')
+fig4 = alleghany.plot(kind = "bar", x = "Year", y = "Republican Share", title = "Alleghany County")
 fig4.get_figure().savefig('alleghany_county.pdf')
